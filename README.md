@@ -38,6 +38,13 @@ curl -s -X POST http://localhost:3000/urls \
   -d '{"url":"https://www.example.com/some/very/long/path"}'
 
 
+## Tests
+
+```bash
+npm test          # unit (UrlsService)
+npm run test:e2e  # HTTP API (supertest)
+```
+
 ## Lint
 
 ```bash
