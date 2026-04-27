@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import { randomBytes } from 'crypto';
 
 const CODE_LENGTH = 8;
@@ -29,7 +33,9 @@ export class UrlsService {
       attempts += 1;
     }
     if (this.byCode.has(code)) {
-      throw new Error('Could not allocate a unique short code');
+      throw new InternalServerErrorException(
+        'Could not allocate a unique short code',
+      );
     }
 
     this.byCode.set(code, { url });
@@ -62,7 +68,7 @@ export class UrlsService {
     const bytes = randomBytes(CODE_LENGTH);
     let out = '';
     for (let i = 0; i < CODE_LENGTH; i++) {
-      out += ALPHABET[bytes[i] % ALPHABET.length];
+      out += ALPHABET[bytes[i]! % ALPHABET.length]!;
     }
     return out;
   }
