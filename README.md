@@ -25,15 +25,18 @@ Example long URL: `https://www.example.com/some/very/long/path`
 - **`GET /`** — `{ "ok": true }`.
 - **`POST /urls` errors** — **400** for empty, missing, or invalid `url`, or extra JSON fields (`forbidNonWhitelisted`).
 
-## Try it
+## How to simply test
+Run it:
+npm install
+npm run start:dev
+Leave it running. By default it listens on http://localhost:3000.
 
-```bash
+Shorten a URL:
+In another terminal:
 curl -s -X POST http://localhost:3000/urls \
-  -H 'Content-Type: application/json' \
+  -H "Content-Type: application/json" \
   -d '{"url":"https://www.example.com/some/very/long/path"}'
-```
 
-Then open the `shortUrl` from the response, or: `curl -sI "http://localhost:3000/<code>"` and check `Location`.
 
 ## Lint
 
