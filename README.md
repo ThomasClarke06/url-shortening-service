@@ -41,8 +41,8 @@ curl -s -X POST http://localhost:3000/urls \
 ## Tests
 
 ```bash
-npm test          # unit (UrlsService)
-npm run test:e2e  # HTTP API (supertest)
+npm test
+npm run test:e2e
 ```
 
 ## Lint
