@@ -1,35 +1,29 @@
 # url-shortening-service
-Goal: Build a simple URL shortening service
 
-NestJS + TypeScript API: create a shortened link, follow it to the original URL, reject bad input. Storage is in-memory (resets when the process restarts).
+Goal: build a simple URL shortening service.
+
+NestJS + TypeScript: shorten a link, open the short URL to be redirected to the original. Bad input returns **400**. Storage is **in-memory** (clears when the process stops).
 
 ## Run
 
 ```bash
 npm install
+npm run build    # compile TypeScript → dist/
 npm run start:dev
 ```
 
-Default: http://localhost:3000
-Example: https://www.example.com/some/very/long/path
+Default: **http://localhost:3000** (`PORT` overrides the port).
+
+Optional **`SHORT_LINK_BASE`**: no trailing slash (e.g. `https://short.ly`). Used in the JSON `shortUrl`; if unset, defaults to `http://localhost:{PORT}`.
+
+Example long URL: `https://www.example.com/some/very/long/path`
 
 ## API
 
-**`POST /urls`** — body `{ "url": "https://..." }` → **201**
-
-```json
-{
-  "shortUrl": "http://localhost:3000/abc12xyz",
-  "code": "abc12xyz",
-  "originalUrl": "https://..."
-}
-```
-
-**`GET /{code}`** — **302** to the stored URL (`Location` header). Unknown code → **404**.
-
-**`GET /`** — `{ "ok": true }` for a quick health check.
-
-**`POST /urls` errors: 400 for empty, missing, or invalid URL, or extra JSON properties (`forbidNonWhitelisted`).
+- **`POST /urls`** — body `{ "url": "https://..." }` → **201** with `shortUrl`, `code`, `originalUrl`. Same URL again → same `code`.
+- **`GET /{code}`** — **302** redirect; unknown code → **404**.
+- **`GET /`** — `{ "ok": true }`.
+- **`POST /urls` errors** — **400** for empty, missing, or invalid `url`, or extra JSON fields (`forbidNonWhitelisted`).
 
 ## Try it
 
@@ -39,9 +33,15 @@ curl -s -X POST http://localhost:3000/urls \
   -d '{"url":"https://www.example.com/some/very/long/path"}'
 ```
 
-## Tests
+Then open the `shortUrl` from the response, or: `curl -sI "http://localhost:3000/<code>"` and check `Location`.
+
+## Lint
 
 ```bash
-npm test
-npm run test:e2e
+npm run lint
+npm run lint:fix
 ```
+
+## Why `package-lock.json` is large
+
+npm records **every** dependency (direct and transitive) with version, download URL, and integrity hash. That is normal and keeps installs reproducible. Most lines are not hand-written app code.
