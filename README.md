@@ -8,7 +8,7 @@ NestJS + TypeScript: shorten a link, open the short URL to be redirected to the 
 
 ```bash
 npm install
-npm run build    # compile TypeScript → dist/
+npm run build    # compile TypeScript
 npm run start:dev
 ```
 
@@ -44,4 +44,4 @@ npm run lint:fix
 
 ## Why `package-lock.json` is large
 
-npm records **every** dependency (direct and transitive) with version, download URL, and integrity hash. That is normal and keeps installs reproducible. Most lines are not hand-written app code.
+npm records every dependency (direct and transitive) with version, download URL, and integrity hash. That is normal and keeps installs reproducible. Most lines are not hand-written app code.
