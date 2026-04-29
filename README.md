@@ -35,7 +35,10 @@ Shorten a URL:
 In another terminal:
 curl -s -X POST http://localhost:3000/urls \
   -H "Content-Type: application/json" \
-  -d '{"url":"https://www.example.com/some/very/long/path"}'
+  -d '{"url":"https://www.example.com/some/very/long/path"}'\
+
+  Or in native powershell:
+  Invoke-RestMethod -Method Post -Uri "http://localhost:3000/urls" -ContentType "application/json" -Body '{"url":"https://www.example.com/some/very/long/path"}'
 
 
 ## Tests
