@@ -40,6 +40,12 @@ curl -s -X POST http://localhost:3000/urls \
   Or in native powershell:
   Invoke-RestMethod -Method Post -Uri "http://localhost:3000/urls" -ContentType "application/json" -Body '{"url":"https://www.example.com/some/very/long/path"}'
 
+  Powershell:
+  curl.exe --% -s -X POST http://localhost:3000/urls -H "Content-Type: application/json" -d "{\"url\":\"https://www.example.com/some/very/long/path\"}"
+
+health check:
+  curl.exe -s "http://localhost:3000"
+
 
 ## Tests
 
