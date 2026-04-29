@@ -8,7 +8,7 @@ export class ShortenUrlDto {
     {
       require_protocol: true,
       protocols: ['http', 'https'],
-      require_tld: false,
+      require_tld: false, // allows http://localhost/... in dev
     },
     { message: 'url must be a valid http(s) URL' },
   )

@@ -8,7 +8,7 @@ import { randomBytes } from 'crypto';
 const CODE_LENGTH = 8;
 const ALPHABET = 'abcdefghijklmnopqrstuvwxyz0123456789';
 
-export type ShortenResult = {
+type ShortenResult = {
   code: string;
   shortUrl: string;
   originalUrl: string;
@@ -16,6 +16,7 @@ export type ShortenResult = {
 
 @Injectable()
 export class UrlsService {
+  /** Lookup by short code; second map makes repeat shorten for the same URL idempotent. */
   private readonly byCode = new Map<string, { url: string }>();
   private readonly codeByUrl = new Map<string, string>();
 
@@ -28,6 +29,7 @@ export class UrlsService {
 
     let code = this.generateCode();
     let attempts = 0;
+    // Same code twice is extremely unlikely; retry a few times before giving up.
     while (this.byCode.has(code) && attempts < 16) {
       code = this.generateCode();
       attempts += 1;
@@ -43,6 +45,7 @@ export class UrlsService {
     return this.toResult(code, shortLinkBase);
   }
 
+  /** Used by GET /:code — returns the long URL or throws NotFoundException. */
   resolveForRedirect(code: string): string {
     const row = this.byCode.get(code);
     if (!row) {
@@ -68,7 +71,7 @@ export class UrlsService {
     const bytes = randomBytes(CODE_LENGTH);
     let out = '';
     for (let i = 0; i < CODE_LENGTH; i++) {
-      out += ALPHABET[bytes[i]! % ALPHABET.length]!;
+      out += ALPHABET[bytes[i]! % ALPHABET.length];
     }
     return out;
   }
