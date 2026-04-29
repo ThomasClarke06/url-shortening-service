@@ -15,6 +15,7 @@ import { UrlsService } from './urls.service';
 export class UrlsController {
   constructor(private readonly urls: UrlsService) {}
 
+  // Declared before GET :code so "/" is not captured as a code.
   @Get()
   root(): { ok: boolean } {
     return { ok: true };
@@ -32,6 +33,7 @@ export class UrlsController {
   @Get(':code')
   resolve(@Param('code') code: string, @Res() res: Response): void {
     const target = this.urls.resolveForRedirect(code);
+    // Explicit 302 so clients get a real Location header (reliable with supertest and browsers).
     res.redirect(302, target);
   }
 }

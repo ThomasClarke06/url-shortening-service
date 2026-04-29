@@ -8,6 +8,7 @@ async function bootstrap() {
     new ValidationPipe({
       whitelist: true,
       forbidNonWhitelisted: true,
+      // Strips unknown JSON keys and validates DTOs (e.g. ShortenUrlDto) before controllers run.
     }),
   );
   await app.listen(process.env.PORT ?? 3000);
