@@ -52,10 +52,6 @@ npm run lint
 npm run lint:fix
 ```
 
-## Why `package-lock.json` is large
-
-npm records every dependency (direct and transitive) with version, download URL, and integrity hash. That is normal and keeps installs reproducible. Most lines are not hand-written app code.
-
 
 ## Design and future work
 
