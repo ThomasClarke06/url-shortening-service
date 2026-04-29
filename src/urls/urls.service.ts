@@ -8,7 +8,7 @@ import { randomBytes } from 'crypto';
 const CODE_LENGTH = 8;
 const ALPHABET = 'abcdefghijklmnopqrstuvwxyz0123456789';
 
-export type ShortenResult = {
+type ShortenResult = {
   code: string;
   shortUrl: string;
   originalUrl: string;
@@ -68,7 +68,7 @@ export class UrlsService {
     const bytes = randomBytes(CODE_LENGTH);
     let out = '';
     for (let i = 0; i < CODE_LENGTH; i++) {
-      out += ALPHABET[bytes[i]! % ALPHABET.length]!;
+      out += ALPHABET[bytes[i]! % ALPHABET.length];
     }
     return out;
   }
